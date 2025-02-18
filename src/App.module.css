@@ -1,0 +1,164 @@
+.buttonContainer {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  z-index: 100;
+  width: 104px;
+  height: 282px;
+  background: rgba(0, 0, 0, 0.8);
+  user-select: none;
+  font-family: "Roboto Mono", serif;
+  border-bottom-right-radius: 10px;
+  transition: transform 0.5s ease-out;
+}
+
+.buttonContainer.closed {
+  transform: translateX(-100%);
+}
+
+.buttonContainer2 {
+  display: flex;
+  align-items: center;
+  color: #fff;
+  gap: 6px;
+  padding: 5px 8px;
+}
+
+.buttonTitle {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  display: flex;
+  height: 24px;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+}
+
+.zoomButton {
+  padding: 5px;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 5px;
+  cursor: pointer;
+  width: 58px;
+  text-align: center;
+}
+
+.zoomButton:hover {
+  background: rgba(0, 0, 0, 1);
+}
+
+.zoomButton2 {
+  font-size: 21px;
+  font-weight: bold;
+}
+
+.positionButton {
+  cursor: pointer;
+  position: absolute;
+}
+
+.positionButton2 {
+  color: #fff;
+  font-size: 23px;
+}
+
+.positionButton2:hover {
+  color: #f1f1f1;
+}
+
+.positionButtonContainer {
+  height: 87px;
+}
+
+.up {
+  margin-left: 40px;
+  margin-top: 10px;
+}
+
+.down {
+  margin-left: 40px;
+  margin-top: 50px;
+}
+
+.left {
+  margin-left: 20px;
+  margin-top: 30px;
+}
+
+.right {
+  margin-left: 60px;
+  margin-top: 30px;
+}
+
+.resetButton {
+  padding: 3px;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 17px;
+  margin-top: 7px;
+  width: 58px;
+  text-align: center;
+}
+
+.resetButton:hover {
+  background: rgba(0, 0, 0, 1);
+}
+
+.resetButton2 {
+  font-size: 21px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.closeContainer {
+  width: 100%;
+  height: 30px;
+  color: white;
+  font-size: 12px;
+  cursor: pointer;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  user-select: none;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.closeContainer:hover {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.closeContainer2 {
+  color: white;
+  font-size: 16px;
+}
+
+.openContainer {
+  position: fixed;
+  top: 10px;
+  left: 0px;
+  z-index: 100;
+  width: 24px;
+  height: 45px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.8);
+  user-select: none;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  transition: transform 0.3s ease-out;
+}
+
+.openContainer:hover {
+    background: rgba(0, 0, 0, 0.7);
+  }
+  
+
+.openContainer2 {
+  color: white;
+  font-size: 20px;
+}
