@@ -19,28 +19,43 @@ import SelectionScreen from "./SelectionScreen";
 function App() {
   const [reset, setReset] = useState(1);
   const [zoom, setZoom] = useState(6);
-  const [vertical, setVertical] = useState(1);
   const [horizontal, setHorizontal] = useState(0);
+  const [vertical, setVertical] = useState(0);
   const [isMenuClosed, setIsMenuClosed] = useState(false);
   const initialPosition: [number, number, number] = [
     horizontal,
     vertical,
     zoom,
   ];
-  const initialRotation: [number, number, number] = [-0.05, 0, 0];
+  const [initialRotation, setInitialRotation] = useState<
+    [number, number, number]
+  >([0, 0, 0]);
   const [page, setPage] = useState("selectionScreen");
   const [cameraIndex, setCameraIndex] = useState(0);
   const [loading, setLoading] = useState(true);
-  const [cameraPosition, setCameraPosition] = useState(initialPosition);
+  const [cameraPosition, setCameraPosition] = useState(
+    cameraPositionsGundam[0].position
+  );
   const [cameraPositions, setCameraPositions] = useState(cameraPositionsGundam);
   const [activeLookat, setActiveLookat] = useState(false);
-  //const [cameraLookAt, setCameraLookAt] = useState<[number, number, number]>([0, 0, 0]);
-  const zoomOut = () => setZoom((prev) => Math.min(prev + 0.5, 8.5));
-  const zoomIn = () => setZoom((prev) => Math.max(prev - 0.5, 2.2));
-  const up = () => setVertical((prev) => Math.min(prev - 0.1));
-  const down = () => setVertical((prev) => Math.max(prev + 0.1));
-  const left = () => setHorizontal((prev) => Math.min(prev + 0.1));
-  const right = () => setHorizontal((prev) => Math.max(prev - 0.1));
+  const zoomOut = () => setZoom((prev) => Math.min(prev + 0.5));
+  const zoomIn = () => setZoom((prev) => Math.max(prev - 0.5));
+  const up = () => {
+    setActiveLookat(false);
+    setVertical((prev) => Math.min(prev - 0.1));
+  };
+  const down = () => {
+    setActiveLookat(false);
+    setVertical((prev) => Math.max(prev + 0.1));
+  };
+  const left = () => {
+    setActiveLookat(false);
+    setHorizontal((prev) => Math.min(prev + 0.1));
+  };
+  const right = () => {
+    setActiveLookat(false);
+    setHorizontal((prev) => Math.max(prev - 0.1));
+  };
   const resetPosition = () => {
     setZoom(12);
     setVertical(1.5);
@@ -48,19 +63,101 @@ function App() {
     setReset((prev) => prev + 0.1);
   };
 
+  const rotateLeft = () => {
+    setInitialRotation(([x, y, z]) => [x, y - 0.01, z]);
+  };
+
+  const rotateRight = () => {
+    setInitialRotation(([x, y, z]) => [x, y + 0.01, z]);
+  };
+
+  const rotateUp = () => {
+    setInitialRotation(([x, y, z]) => [x - 0.05, 1, z]);
+  };
+
+  const rotateDown = () => {
+    setInitialRotation(([x, y, z]) => [x + 0.05, 1, z]);
+  };
+
   useEffect(() => setLoading(true), []);
+
   useEffect(
     () => setCameraPosition(initialPosition),
     [zoom, horizontal, vertical, reset]
   );
 
+  useEffect(() => console.log("initialPosition " + initialPosition), []);
+
   useEffect(() => {
     if (page === "Gundam") {
       setCameraPositions(cameraPositionsGundam);
+      setHorizontal(cameraPositionsGundam[0].position[0]);
+      setVertical(cameraPositionsGundam[0].position[1]);
+      setZoom(cameraPositionsGundam[0].position[2]);
+      setInitialRotation(cameraPositionsGundam[0].rotation);
     } else if (page === "House") {
       setCameraPositions(cameraPositionsHouse);
+      setHorizontal(cameraPositionsHouse[0].position[0]);
+      setVertical(cameraPositionsHouse[0].position[1]);
+      setZoom(cameraPositionsHouse[0].position[2]);
+      setInitialRotation(cameraPositionsHouse[0].rotation);
     }
   }, [page]);
+
+  useEffect(() => {
+    console.log(horizontal);
+  }, [horizontal]);
+
+  useEffect(() => {
+    interface KeyboardEventHandlers {
+      ArrowUp: () => void;
+      ArrowDown: () => void;
+      ArrowLeft: () => void;
+      ArrowRight: () => void;
+      w: () => void;
+      s: () => void;
+      q: () => void;
+      e: () => void;
+    }
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      const handlers: KeyboardEventHandlers = {
+        ArrowUp: up,
+        ArrowDown: down,
+        ArrowLeft: left,
+        ArrowRight: right,
+        w: () => {},
+        s: () => {},
+        q: rotateLeft,
+        e: rotateRight,
+      };
+
+      const handler = handlers[event.key as keyof KeyboardEventHandlers];
+      if (handler) {
+        handler();
+      }
+    };
+
+    interface WheelEventHandlers {
+      deltaY: number;
+    }
+
+    const handleWheel = (event: WheelEventHandlers) => {
+      if (event.deltaY > 0) {
+        zoomOut();
+      } else {
+        zoomIn();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("wheel", handleWheel);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("wheel", handleWheel);
+    };
+  }, []);
 
   return (
     <>
@@ -89,7 +186,6 @@ function App() {
               >
                 <IoIosArrowBack className={classes.closeContainer2} />
               </div>
-
               <div className={classes.buttonTitle}>Zoom</div>
               <div className={classes.buttonContainer2}>
                 <div onClick={zoomOut} className={classes.zoomButton}>
@@ -99,7 +195,6 @@ function App() {
                   <FaSquarePlus className={classes.zoomButton2} />
                 </div>
               </div>
-
               <div className={classes.buttonTitle}>Position</div>
               <div className={classes.positionButtonContainer}>
                 <div
@@ -127,12 +222,10 @@ function App() {
                   <FaCaretSquareRight className={classes.positionButton2} />
                 </div>
               </div>
-
               <div className={classes.buttonTitle}>Reset</div>
               <div onClick={resetPosition} className={classes.resetButton}>
                 <MdOutlineResetTv className={classes.resetButton2} />
               </div>
-
               <div className={classes.buttonTitle}>Camera</div>
               <div className={classes.cameraButtonContainer}>
                 {cameraPositions &&
@@ -140,10 +233,13 @@ function App() {
                     <button
                       key={index}
                       onClick={() => {
+                        setActiveLookat(true);
                         setCameraIndex(index);
-                        setCameraPosition(
-                          cameraPositions[cameraIndex].position
-                        );
+                        setCameraPosition(cameraPositions[index].position);
+                        setInitialRotation(cameraPositions[index].rotation);
+                        setHorizontal(cameraPositions[index].position[0]);
+                        setVertical(cameraPositions[index].position[1]);
+                        setZoom(cameraPositions[index].position[2]);
                       }}
                       className={classes.cameraButton}
                     >
@@ -151,6 +247,41 @@ function App() {
                     </button>
                   ))}
               </div>
+              <div className={classes.buttonTitle}>Rotation</div>
+              <div className={classes.positionButtonContainer}>
+                <div
+                  onClick={rotateUp}
+                  className={`${classes.positionButton} ${classes.up}`}
+                >
+                  <FaCaretSquareUp className={classes.positionButton2} />
+                </div>
+                <div
+                  onClick={rotateDown}
+                  className={`${classes.positionButton} ${classes.down}`}
+                >
+                  <FaCaretSquareDown className={classes.positionButton2} />
+                </div>
+                <div
+                  onClick={rotateLeft}
+                  className={`${classes.positionButton} ${classes.left}`}
+                >
+                  <FaCaretSquareLeft className={classes.positionButton2} />
+                </div>
+                <div
+                  onClick={rotateRight}
+                  className={`${classes.positionButton} ${classes.right}`}
+                >
+                  <FaCaretSquareRight className={classes.positionButton2} />
+                </div>
+              </div>
+              horizontal: {horizontal}
+              <br />
+              vertical: {vertical}
+              <br />
+              zoom: {zoom}
+              <br />
+              rotation: {initialRotation[0]} {initialRotation[1]}
+              <br />
             </div>
           )}
 
@@ -164,6 +295,9 @@ function App() {
               initialPosition={initialPosition}
               initialRotation={initialRotation}
               cameraPosition={cameraPosition}
+              cameraPositionIndex={cameraIndex}
+              setCameraPositionIndex={setCameraIndex}
+              activeLookat={activeLookat}
               setCameraPosition={setCameraPosition}
               loading={loading}
               setLoading={setLoading}
