@@ -33,6 +33,7 @@ function App() {
   const [page, setPage] = useState("selectionScreen");
   const [cameraIndex, setCameraIndex] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [cameraTitle, setCameraTitle] = useState("");
   const [cameraPosition, setCameraPosition] = useState(
     cameraPositionsGundam[0].position
   );
@@ -72,11 +73,11 @@ function App() {
   };
 
   const rotateUp = () => {
-    setInitialRotation(([x, y, z]) => [x - 0.05, 1, z]);
+    setInitialRotation(([x, y, z]) => [x - 0.01, y, z]);
   };
 
   const rotateDown = () => {
-    setInitialRotation(([x, y, z]) => [x + 0.05, 1, z]);
+    setInitialRotation(([x, y, z]) => [x + 0.01, y, z]);
   };
 
   useEffect(() => setLoading(true), []);
@@ -95,18 +96,16 @@ function App() {
       setVertical(cameraPositionsGundam[0].position[1]);
       setZoom(cameraPositionsGundam[0].position[2]);
       setInitialRotation(cameraPositionsGundam[0].rotation);
+      setCameraTitle(cameraPositionsGundam[0].title);
     } else if (page === "House") {
       setCameraPositions(cameraPositionsHouse);
       setHorizontal(cameraPositionsHouse[0].position[0]);
       setVertical(cameraPositionsHouse[0].position[1]);
       setZoom(cameraPositionsHouse[0].position[2]);
       setInitialRotation(cameraPositionsHouse[0].rotation);
+      setCameraTitle(cameraPositionsHouse[0].title);
     }
   }, [page]);
-
-  useEffect(() => {
-    console.log(horizontal);
-  }, [horizontal]);
 
   useEffect(() => {
     interface KeyboardEventHandlers {
@@ -166,6 +165,58 @@ function App() {
       {page !== "selectionScreen" && (
         <>
           {loading && <Preloader />}
+
+          <div className={classes.cameraFixedButtonContainer}>
+            {cameraPositions && (
+              <>
+                <button
+                  key="buttonprev"
+                  onClick={() => {
+                    setCameraIndex(cameraIndex - 1);
+                    setCameraPosition(
+                      cameraPositions[cameraIndex - 1].position
+                    );
+                    setInitialRotation(
+                      cameraPositions[cameraIndex - 1].rotation
+                    );
+                    setHorizontal(cameraPositions[cameraIndex - 1].position[0]);
+                    setVertical(cameraPositions[cameraIndex - 1].position[1]);
+                    setZoom(cameraPositions[cameraIndex - 1].position[2]);
+                    setReset((prev) => prev + 0.1);
+                    setCameraTitle(cameraPositions[cameraIndex - 1].title);
+                  }}
+                  className={classes.cameraButton}
+                  disabled={cameraIndex === 0}
+                >
+                  indietro
+                </button>
+
+                <p>{cameraTitle}</p>
+
+                <button
+                  key="buttonnext"
+                  onClick={() => {
+                    setCameraIndex(cameraIndex + 1);
+                    setCameraPosition(
+                      cameraPositions[cameraIndex + 1].position
+                    );
+                    setInitialRotation(
+                      cameraPositions[cameraIndex + 1].rotation
+                    );
+                    setHorizontal(cameraPositions[cameraIndex + 1].position[0]);
+                    setVertical(cameraPositions[cameraIndex + 1].position[1]);
+                    setZoom(cameraPositions[cameraIndex + 1].position[2]);
+                    setReset((prev) => prev + 0.1);
+                    setCameraTitle(cameraPositions[cameraIndex + 1].title);
+                  }}
+                  className={classes.cameraButton}
+                  disabled={cameraIndex > cameraPositions.length - 2}
+                >
+                  avanti
+                </button>
+              </>
+            )}
+          </div>
 
           {isMenuClosed ? (
             <div
@@ -240,6 +291,7 @@ function App() {
                         setHorizontal(cameraPositions[index].position[0]);
                         setVertical(cameraPositions[index].position[1]);
                         setZoom(cameraPositions[index].position[2]);
+                        setReset((prev) => prev + 0.1);
                       }}
                       className={classes.cameraButton}
                     >
@@ -292,8 +344,11 @@ function App() {
             camera={{ fov: 45, near: 0.1, far: 2000, position: [-3, 1.8, 4] }}
           >
             <Scene
+              page={page}
+              reset={reset}
               initialPosition={initialPosition}
               initialRotation={initialRotation}
+              setInitialRotation={setInitialRotation}
               cameraPosition={cameraPosition}
               cameraPositionIndex={cameraIndex}
               setCameraPositionIndex={setCameraIndex}

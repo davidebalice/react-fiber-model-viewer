@@ -1,23 +1,22 @@
-import { useGLTF, useProgress, Sky, Environment } from "@react-three/drei";
+import { Environment, Sky, useGLTF, useProgress } from "@react-three/drei";
 import { useEffect } from "react";
 import "./style.css";
-import GradientBackground from "./GradientBackground";
 
-interface GundamProps {
+interface HouseProps {
   occlude: number;
   setLoading: (loading: boolean) => void;
   handleMouseEnter?: () => void;
   handleMouseLeave?: () => void;
 }
 
-export default function Gundam({
+export default function House({
   occlude,
   setLoading,
   handleMouseEnter,
   handleMouseLeave,
-}: GundamProps) {
-  const gundam = useGLTF("./public/assets/model/gundam.gltf");
-
+}: HouseProps) {
+  const House = useGLTF("./public/assets/model/house.gltf");
+  const Garden = useGLTF("./public/assets/model/garden.gltf");
 
   const { progress } = useProgress();
 
@@ -29,9 +28,7 @@ export default function Gundam({
 
   return (
     <>
-    
-  <GradientBackground/>
-  {/*
+      {/*
   <Sky
   sunPosition={[0, 0.01, 0]} // Posizione del sole bassa per un'illuminazione minima
   turbidity={40} // Più alto = più foschia (effetto sfumato)
@@ -41,45 +38,34 @@ export default function Gundam({
 />
   */}
 
+      <Environment preset="warehouse" />
 
-
-<Environment preset="warehouse"  />
-
-
-
-
-
-{/*
- <Sky
+      <Sky
         distance={40000}
         sunPosition={[100, 20, 100]}
         inclination={0.5}
         azimuth={0.25}
       />
-*/}
 
-
-
-
-
-
-
-
-
-
-      
       <primitive
-        object={gundam.scene}
-        position-x={-1}
-        position-y={1}
-        position-z={-1}
-        scale={[0.04, 0.04, 0.04]}
+        object={House.scene}
+        position-x={0}
+        position-y={0}
+        position-z={0}
+        scale={[1, 1, 1]}
         rotation={[0, 0.2, 0]}
         castShadow
-      >
-       
-      </primitive>
+      ></primitive>
+
+      <primitive
+        object={Garden.scene}
+        position-x={-1.5}
+        position-y={1.9}
+        position-z={-3}
+        scale={[2, 2, 2]}
+        rotation={[0, 1.7, 0]}
+        castShadow
+      ></primitive>
     </>
   );
 }
-

@@ -7,8 +7,9 @@ interface SelectionScreenProps {
 const SelectionScreen: React.FC<SelectionScreenProps> = ({ setPage }) => {
   return (
     <>
-      <div onClick={() => setPage("Gundam")}>fffsafsafsasfasaf</div>
-    </>
+      <div onClick={() => setPage("Gundam")}>gundam</div>
+      <div onClick={() => setPage("House")}>house</div>
+      </>
   );
 };
 

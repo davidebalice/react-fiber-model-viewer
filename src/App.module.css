@@ -154,11 +154,17 @@
 }
 
 .openContainer:hover {
-    background: rgba(0, 0, 0, 0.7);
-  }
-  
+  background: rgba(0, 0, 0, 0.7);
+}
 
 .openContainer2 {
   color: white;
   font-size: 20px;
+}
+
+.cameraFixedButtonContainer {
+  border: 1px solid red;
+  position: fixed;
+  z-index: 100;
+  bottom: 0;
 }
