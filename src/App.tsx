@@ -1,6 +1,7 @@
 import { Canvas } from "@react-three/fiber";
 import { useEffect, useState } from "react";
 import ReactDOM from "react-dom/client";
+import { BsCameraReelsFill } from "react-icons/bs";
 import {
   FaCaretSquareDown,
   FaCaretSquareLeft,
@@ -12,6 +13,7 @@ import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { MdOutlineResetTv } from "react-icons/md";
 import classes from "./App.module.css";
 import { cameraPositionsGundam, cameraPositionsHouse } from "./cameraPosition";
+import Header from "./Header"; // Add this line to import the Header component
 import Preloader from "./Preloader";
 import Scene from "./Scene";
 import SelectionScreen from "./SelectionScreen";
@@ -166,54 +168,63 @@ function App() {
         <>
           {loading && <Preloader />}
 
+          <Header setPage={setPage} />
+
           <div className={classes.cameraFixedButtonContainer}>
             {cameraPositions && (
               <>
-                <button
-                  key="buttonprev"
-                  onClick={() => {
-                    setCameraIndex(cameraIndex - 1);
-                    setCameraPosition(
-                      cameraPositions[cameraIndex - 1].position
-                    );
-                    setInitialRotation(
-                      cameraPositions[cameraIndex - 1].rotation
-                    );
-                    setHorizontal(cameraPositions[cameraIndex - 1].position[0]);
-                    setVertical(cameraPositions[cameraIndex - 1].position[1]);
-                    setZoom(cameraPositions[cameraIndex - 1].position[2]);
-                    setReset((prev) => prev + 0.1);
-                    setCameraTitle(cameraPositions[cameraIndex - 1].title);
-                  }}
-                  className={classes.cameraButton}
-                  disabled={cameraIndex === 0}
-                >
-                  indietro
-                </button>
+                <div className={classes.cameraFixedButtonWrapper}>
+                  <BsCameraReelsFill />
+                  <button
+                    key="buttonprev"
+                    onClick={() => {
+                      setCameraIndex(cameraIndex - 1);
+                      setCameraPosition(
+                        cameraPositions[cameraIndex - 1].position
+                      );
+                      setInitialRotation(
+                        cameraPositions[cameraIndex - 1].rotation
+                      );
+                      setHorizontal(
+                        cameraPositions[cameraIndex - 1].position[0]
+                      );
+                      setVertical(cameraPositions[cameraIndex - 1].position[1]);
+                      setZoom(cameraPositions[cameraIndex - 1].position[2]);
+                      setReset((prev) => prev + 0.1);
+                      setCameraTitle(cameraPositions[cameraIndex - 1].title);
+                    }}
+                    className={classes.cameraButton}
+                    disabled={cameraIndex === 0}
+                  >
+                    indietro
+                  </button>
 
-                <p>{cameraTitle}</p>
+                  <p>{cameraTitle}</p>
 
-                <button
-                  key="buttonnext"
-                  onClick={() => {
-                    setCameraIndex(cameraIndex + 1);
-                    setCameraPosition(
-                      cameraPositions[cameraIndex + 1].position
-                    );
-                    setInitialRotation(
-                      cameraPositions[cameraIndex + 1].rotation
-                    );
-                    setHorizontal(cameraPositions[cameraIndex + 1].position[0]);
-                    setVertical(cameraPositions[cameraIndex + 1].position[1]);
-                    setZoom(cameraPositions[cameraIndex + 1].position[2]);
-                    setReset((prev) => prev + 0.1);
-                    setCameraTitle(cameraPositions[cameraIndex + 1].title);
-                  }}
-                  className={classes.cameraButton}
-                  disabled={cameraIndex > cameraPositions.length - 2}
-                >
-                  avanti
-                </button>
+                  <button
+                    key="buttonnext"
+                    onClick={() => {
+                      setCameraIndex(cameraIndex + 1);
+                      setCameraPosition(
+                        cameraPositions[cameraIndex + 1].position
+                      );
+                      setInitialRotation(
+                        cameraPositions[cameraIndex + 1].rotation
+                      );
+                      setHorizontal(
+                        cameraPositions[cameraIndex + 1].position[0]
+                      );
+                      setVertical(cameraPositions[cameraIndex + 1].position[1]);
+                      setZoom(cameraPositions[cameraIndex + 1].position[2]);
+                      setReset((prev) => prev + 0.1);
+                      setCameraTitle(cameraPositions[cameraIndex + 1].title);
+                    }}
+                    className={classes.cameraButton}
+                    disabled={cameraIndex > cameraPositions.length - 2}
+                  >
+                    avanti
+                  </button>
+                </div>
               </>
             )}
           </div>
@@ -273,10 +284,7 @@ function App() {
                   <FaCaretSquareRight className={classes.positionButton2} />
                 </div>
               </div>
-              <div className={classes.buttonTitle}>Reset</div>
-              <div onClick={resetPosition} className={classes.resetButton}>
-                <MdOutlineResetTv className={classes.resetButton2} />
-              </div>
+             
               <div className={classes.buttonTitle}>Camera</div>
               <div className={classes.cameraButtonContainer}>
                 {cameraPositions &&

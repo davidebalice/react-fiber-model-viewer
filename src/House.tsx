@@ -17,6 +17,8 @@ export default function House({
 }: HouseProps) {
   const House = useGLTF("./public/assets/model/house.gltf");
   const Garden = useGLTF("./public/assets/model/garden.gltf");
+  const Garden2 = useGLTF("./public/assets/model/garden2.gltf");
+  const Street = useGLTF("./public/assets/model/street.gltf");
 
   const { progress } = useProgress();
 
@@ -28,16 +30,6 @@ export default function House({
 
   return (
     <>
-      {/*
-  <Sky
-  sunPosition={[0, 0.01, 0]} // Posizione del sole bassa per un'illuminazione minima
-  turbidity={40} // Più alto = più foschia (effetto sfumato)
-  rayleigh={0} // Controlla la dispersione della luce, minore = meno blu
-  mieCoefficient={0.000001} // Riduce la luce diffusa
-  mieDirectionalG={1} // Rende la luce più focalizzata
-/>
-  */}
-
       <Environment preset="warehouse" />
 
       <Sky
@@ -58,12 +50,32 @@ export default function House({
       ></primitive>
 
       <primitive
+        object={Street.scene}
+        position-x={3}
+        position-y={-0.8}
+        position-z={13}
+        scale={[0.3, 0.3, 0.3]}
+        rotation={[0, 1.76, 0]}
+        castShadow
+      ></primitive>
+
+      <primitive
         object={Garden.scene}
-        position-x={-1.5}
-        position-y={1.9}
-        position-z={-3}
-        scale={[2, 2, 2]}
-        rotation={[0, 1.7, 0]}
+        position-x={8.5}
+        position-y={0.8}
+        position-z={1.1}
+        scale={[1.1, 1, 1.2]}
+        rotation={[0, 1.76, 0]}
+        castShadow
+      ></primitive>
+
+      <primitive
+        object={Garden2.scene}
+        position-x={-7.4}
+        position-y={0.8}
+        position-z={4.34}
+        scale={[1.1, 1, 1.2]}
+        rotation={[0, 1.76, 0]}
         castShadow
       ></primitive>
     </>

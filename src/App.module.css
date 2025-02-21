@@ -1,14 +1,13 @@
 .buttonContainer {
   position: fixed;
-  top: 0px;
+  top: 36px;
   left: 0px;
-  z-index: 100;
+  z-index: 80;
   width: 104px;
-  height: 282px;
+  height: calc(100vh - 36px);
   background: rgba(0, 0, 0, 0.8);
   user-select: none;
   font-family: "Roboto Mono", serif;
-  border-bottom-right-radius: 10px;
   transition: transform 0.5s ease-out;
 }
 
@@ -138,7 +137,7 @@
 
 .openContainer {
   position: fixed;
-  top: 10px;
+  top: 50px;
   left: 0px;
   z-index: 100;
   width: 24px;
@@ -163,8 +162,104 @@
 }
 
 .cameraFixedButtonContainer {
-  border: 1px solid red;
   position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   z-index: 100;
-  bottom: 0;
+  bottom: 10px;
+  color:#fff;
+  width: 100%;
+  height: 40px;
+  text-align: center;
+  left: 0;
+}
+
+.cameraFixedButtonWrapper {
+  background: rgba(0, 0, 0, 0.6);
+  width: 300px;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+}
+
+.selectionTitle {
+  font-size: 30px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.cardContainer {
+  display: flex;
+  align-items: start;
+  gap: 20px;
+  justify-content: space-between;
+}
+
+.selectionScreen {
+  width: 90%;
+  max-width: 1400px;
+  margin: 0 auto;
+  margin-top: 100px;
+}
+
+.selectionCard {
+  width: 32%;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #ddd;
+  box-shadow: 0px 3px 3px 0px rgb(0, 0, 0, 0.25);
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.selectionCard:hover {
+  box-shadow: 0px 4px 4px 0px rgb(0, 0, 0, 0.45);
+  transform: scale(1.01);
+}
+
+.header {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  top: 0px;
+  width: 100%;
+  background: white;
+  height: 36px;
+  z-index: 10;
+  box-shadow: 0px 3px 3px 0px rgb(0, 0, 0, 0.25);
+}
+
+.selectionText {
+  text-align: center;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.menu {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  font-size: 13px;
+}
+
+.logo {
+  width: 80px;
+  margin-left: 4px;
+}
+
+.github {
+  width: 30px;
+  margin-right: 8px;
+  margin-top: 4px;
+}
+
+.button:hover {
+  color: #888;
+  cursor: pointer;
 }
