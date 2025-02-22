@@ -3,6 +3,7 @@ import { useFrame, useThree } from "@react-three/fiber";
 import { Vector3 } from "three";
 import Gundam from "./Gundam";
 import House from "./House";
+import Car from "./Car";
 
 interface SceneProps {
   page: string;
@@ -80,6 +81,13 @@ export default function Scene({
           />
         ) : page === "House" ? (
           <House
+            occlude={cameraPositionIndex}
+            setLoading={setLoading}
+            handleMouseLeave={handleMouseLeave}
+            handleMouseEnter={handleMouseEnter}
+          />
+        ) : page === "Car" ? (
+          <Car
             occlude={cameraPositionIndex}
             setLoading={setLoading}
             handleMouseLeave={handleMouseLeave}

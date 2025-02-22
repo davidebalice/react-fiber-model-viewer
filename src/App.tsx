@@ -10,10 +10,10 @@ import {
 } from "react-icons/fa";
 import { FaSquareMinus, FaSquarePlus } from "react-icons/fa6";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import { MdOutlineResetTv } from "react-icons/md";
+import { RiArrowLeftSLine, RiArrowRightSLine } from "react-icons/ri";
 import classes from "./App.module.css";
-import { cameraPositionsGundam, cameraPositionsHouse } from "./cameraPosition";
-import Header from "./Header"; // Add this line to import the Header component
+import { cameraPositionsGundam, cameraPositionsHouse, cameraPositionsCar } from "./cameraPosition";
+import Header from "./Header";
 import Preloader from "./Preloader";
 import Scene from "./Scene";
 import SelectionScreen from "./SelectionScreen";
@@ -92,6 +92,8 @@ function App() {
   useEffect(() => console.log("initialPosition " + initialPosition), []);
 
   useEffect(() => {
+    setReset((prev) => prev + 0.1);
+    setCameraIndex(0);
     if (page === "Gundam") {
       setCameraPositions(cameraPositionsGundam);
       setHorizontal(cameraPositionsGundam[0].position[0]);
@@ -106,6 +108,13 @@ function App() {
       setZoom(cameraPositionsHouse[0].position[2]);
       setInitialRotation(cameraPositionsHouse[0].rotation);
       setCameraTitle(cameraPositionsHouse[0].title);
+    }else if (page === "Car") {
+      setCameraPositions(cameraPositionsCar);
+      setHorizontal(cameraPositionsCar[0].position[0]);
+      setVertical(cameraPositionsCar[0].position[1]);
+      setZoom(cameraPositionsCar[0].position[2]);
+      setInitialRotation(cameraPositionsCar[0].rotation);
+      setCameraTitle(cameraPositionsCar[0].title);
     }
   }, [page]);
 
@@ -170,60 +179,90 @@ function App() {
 
           <Header setPage={setPage} />
 
-          <div className={classes.cameraFixedButtonContainer}>
+          <div className={classes.cameraFixed}>
             {cameraPositions && (
               <>
-                <div className={classes.cameraFixedButtonWrapper}>
-                  <BsCameraReelsFill />
-                  <button
-                    key="buttonprev"
-                    onClick={() => {
-                      setCameraIndex(cameraIndex - 1);
-                      setCameraPosition(
-                        cameraPositions[cameraIndex - 1].position
-                      );
-                      setInitialRotation(
-                        cameraPositions[cameraIndex - 1].rotation
-                      );
-                      setHorizontal(
-                        cameraPositions[cameraIndex - 1].position[0]
-                      );
-                      setVertical(cameraPositions[cameraIndex - 1].position[1]);
-                      setZoom(cameraPositions[cameraIndex - 1].position[2]);
-                      setReset((prev) => prev + 0.1);
-                      setCameraTitle(cameraPositions[cameraIndex - 1].title);
-                    }}
-                    className={classes.cameraButton}
-                    disabled={cameraIndex === 0}
-                  >
-                    indietro
-                  </button>
+                <div className={classes.cameraFixedButtonContainer}>
+                  <div>
+                    {" "}
+                    <BsCameraReelsFill /> <span>select camera</span>
+                  </div>
 
-                  <p>{cameraTitle}</p>
+                  <div className={classes.cameraFixedButtonWrapper}>
+                    {cameraIndex === 0 ? (
+                      <>
+                        <RiArrowLeftSLine
+                          className={`${classes.cameraButton} ${classes.disabled}`}
+                        />
+                      </>
+                    ) : (
+                      <>
+                        <RiArrowLeftSLine
+                          className={classes.cameraButton}
+                          onClick={() => {
+                            setCameraIndex(cameraIndex - 1);
+                            setCameraPosition(
+                              cameraPositions[cameraIndex - 1].position
+                            );
+                            setInitialRotation(
+                              cameraPositions[cameraIndex - 1].rotation
+                            );
+                            setHorizontal(
+                              cameraPositions[cameraIndex - 1].position[0]
+                            );
+                            setVertical(
+                              cameraPositions[cameraIndex - 1].position[1]
+                            );
+                            setZoom(
+                              cameraPositions[cameraIndex - 1].position[2]
+                            );
+                            setReset((prev) => prev + 0.1);
+                            setCameraTitle(
+                              cameraPositions[cameraIndex - 1].title
+                            );
+                          }}
+                        />
+                      </>
+                    )}
 
-                  <button
-                    key="buttonnext"
-                    onClick={() => {
-                      setCameraIndex(cameraIndex + 1);
-                      setCameraPosition(
-                        cameraPositions[cameraIndex + 1].position
-                      );
-                      setInitialRotation(
-                        cameraPositions[cameraIndex + 1].rotation
-                      );
-                      setHorizontal(
-                        cameraPositions[cameraIndex + 1].position[0]
-                      );
-                      setVertical(cameraPositions[cameraIndex + 1].position[1]);
-                      setZoom(cameraPositions[cameraIndex + 1].position[2]);
-                      setReset((prev) => prev + 0.1);
-                      setCameraTitle(cameraPositions[cameraIndex + 1].title);
-                    }}
-                    className={classes.cameraButton}
-                    disabled={cameraIndex > cameraPositions.length - 2}
-                  >
-                    avanti
-                  </button>
+                    <p>{cameraTitle}</p>
+
+                    {cameraIndex > cameraPositions.length - 2 ? (
+                      <>
+                        <RiArrowRightSLine
+                          className={`${classes.cameraButton} ${classes.disabled}`}
+                        />
+                      </>
+                    ) : (
+                      <>
+                        <RiArrowRightSLine
+                          className={classes.cameraButton}
+                          onClick={() => {
+                            setCameraIndex(cameraIndex + 1);
+                            setCameraPosition(
+                              cameraPositions[cameraIndex + 1].position
+                            );
+                            setInitialRotation(
+                              cameraPositions[cameraIndex + 1].rotation
+                            );
+                            setHorizontal(
+                              cameraPositions[cameraIndex + 1].position[0]
+                            );
+                            setVertical(
+                              cameraPositions[cameraIndex + 1].position[1]
+                            );
+                            setZoom(
+                              cameraPositions[cameraIndex + 1].position[2]
+                            );
+                            setReset((prev) => prev + 0.1);
+                            setCameraTitle(
+                              cameraPositions[cameraIndex + 1].title
+                            );
+                          }}
+                        />
+                      </>
+                    )}
+                  </div>
                 </div>
               </>
             )}
@@ -284,7 +323,6 @@ function App() {
                   <FaCaretSquareRight className={classes.positionButton2} />
                 </div>
               </div>
-             
               <div className={classes.buttonTitle}>Camera</div>
               <div className={classes.cameraButtonContainer}>
                 {cameraPositions &&
@@ -349,7 +387,7 @@ function App() {
             shadows
             dpr={[1, 2]}
             style={{ position: "absolute", top: 0, left: 0, zIndex: 0 }}
-            camera={{ fov: 45, near: 0.1, far: 2000, position: [-3, 1.8, 4] }}
+            camera={{ fov: 45, near: 0.1, far: 100, position: [-3, 1.8, 4] }}
           >
             <Scene
               page={page}

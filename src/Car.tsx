@@ -3,20 +3,20 @@ import { useEffect } from "react";
 import GradientBackground from "./GradientBackground";
 import "./style.css";
 
-interface GundamProps {
+interface CarProps {
   occlude: number;
   setLoading: (loading: boolean) => void;
   handleMouseEnter?: () => void;
   handleMouseLeave?: () => void;
 }
 
-export default function Gundam({
+export default function Car({
   occlude,
   setLoading,
   handleMouseEnter,
   handleMouseLeave,
-}: GundamProps) {
-  const gundam = useGLTF("./public/assets/model/gundam.gltf");
+}: CarProps) {
+  const car = useGLTF("./public/assets/model/car2.gltf");
 
   const { progress } = useProgress();
 
@@ -33,11 +33,11 @@ export default function Gundam({
       <Environment preset="warehouse" />
 
       <primitive
-        object={gundam.scene}
+        object={car.scene}
         position-x={-1}
         position-y={1}
         position-z={-1}
-        scale={[0.04, 0.04, 0.04]}
+        scale={[0.01, 0.01, 0.01]}
         rotation={[0, 0.2, 0]}
         castShadow
       ></primitive>

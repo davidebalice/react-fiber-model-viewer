@@ -1,3 +1,10 @@
+.homepage {
+  width: 100%;
+  height: 100vh;
+  background-image: url("./public/assets/bg.jpg");
+  background-size: cover;
+}
+
 .buttonContainer {
   position: fixed;
   top: 36px;
@@ -161,33 +168,56 @@
   font-size: 20px;
 }
 
-.cameraFixedButtonContainer {
+.cameraFixed {
   position: fixed;
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 100;
   bottom: 10px;
-  color:#fff;
+  color: #fff;
   width: 100%;
-  height: 40px;
+  height: 46px;
   text-align: center;
   left: 0;
 }
 
-.cameraFixedButtonWrapper {
+.cameraFixedButtonContainer {
   background: rgba(0, 0, 0, 0.6);
-  width: 300px;
+  width: 240px;
+  border-radius: 8px;
+  overflow: hidden;
+  user-select: none;
+}
+
+.cameraFixedButtonContainer div:first-of-type {
+  font-size: 12px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  gap: 12px;
+  background: rgba(0, 0, 0, 0.6);
+  height: 26px;
+}
+
+.cameraFixedButtonWrapper {
   display: flex;
   gap: 20px;
   align-items: center;
+  padding: 4px;
+  padding-top: 0;
   justify-content: center;
-  border-radius: 8px;
+}
+
+.cameraFixedButtonWrapper p {
+  width: 120px;
+  font-size: 13px;
 }
 
 .selectionTitle {
   font-size: 30px;
   margin-bottom: 20px;
+  padding-top: 120px;
   text-align: center;
 }
 
@@ -200,9 +230,8 @@
 
 .selectionScreen {
   width: 90%;
-  max-width: 1400px;
+  max-width: 1200px;
   margin: 0 auto;
-  margin-top: 100px;
 }
 
 .selectionCard {
@@ -213,11 +242,21 @@
   box-shadow: 0px 3px 3px 0px rgb(0, 0, 0, 0.25);
   cursor: pointer;
   transition: all 0.3s;
+  background: #fff;
 }
 
 .selectionCard:hover {
   box-shadow: 0px 4px 4px 0px rgb(0, 0, 0, 0.45);
   transform: scale(1.01);
+  background: #f1f1f1;
+}
+
+.selectionCard img {
+  transition: all 0.3s;
+}
+
+.selectionCard:hover img {
+  filter: brightness(0.8);
 }
 
 .header {
@@ -262,4 +301,24 @@
 .button:hover {
   color: #888;
   cursor: pointer;
+}
+
+.cameraButton {
+  font-weight: bold;
+  font-size: 22px;
+  color: white;
+  cursor: pointer;
+  border-radius: 6px;
+  padding: 6px;
+  background-color: black;
+}
+
+.cameraButton:hover {
+  background-color: #fff;
+  color: black;
+}
+
+.cameraButton.disabled {
+  background-color: #222;
+  color: #999;
 }
