@@ -1,5 +1,6 @@
 import { Environment, Sky, useGLTF, useProgress } from "@react-three/drei";
 import { useEffect } from "react";
+import Glass from "./Glass";
 import "./style.css";
 
 interface HouseProps {
@@ -38,6 +39,8 @@ export default function House({
         inclination={0.5}
         azimuth={0.25}
       />
+
+      <Glass />
 
       <primitive
         object={House.scene}

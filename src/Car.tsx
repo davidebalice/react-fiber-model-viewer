@@ -32,13 +32,16 @@ export default function Car({
 
       <Environment preset="warehouse" />
 
+
+    <ambientLight intensity={3}/>
+
       <primitive
         object={car.scene}
-        position-x={-1}
-        position-y={1}
+        position-x={-0.6}
+        position-y={0.9}
         position-z={-1}
-        scale={[0.01, 0.01, 0.01]}
-        rotation={[0, 0.2, 0]}
+        scale={[0.015, 0.015, 0.015]}
+        rotation={[0, 1, 0]}
         castShadow
       ></primitive>
     </>

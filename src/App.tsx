@@ -12,7 +12,11 @@ import { FaSquareMinus, FaSquarePlus } from "react-icons/fa6";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { RiArrowLeftSLine, RiArrowRightSLine } from "react-icons/ri";
 import classes from "./App.module.css";
-import { cameraPositionsGundam, cameraPositionsHouse, cameraPositionsCar } from "./cameraPosition";
+import {
+  cameraPositionsCar,
+  cameraPositionsGundam,
+  cameraPositionsHouse,
+} from "./cameraPosition";
 import Header from "./Header";
 import Preloader from "./Preloader";
 import Scene from "./Scene";
@@ -108,7 +112,7 @@ function App() {
       setZoom(cameraPositionsHouse[0].position[2]);
       setInitialRotation(cameraPositionsHouse[0].rotation);
       setCameraTitle(cameraPositionsHouse[0].title);
-    }else if (page === "Car") {
+    } else if (page === "Car") {
       setCameraPositions(cameraPositionsCar);
       setHorizontal(cameraPositionsCar[0].position[0]);
       setVertical(cameraPositionsCar[0].position[1]);
@@ -337,11 +341,15 @@ function App() {
                         setHorizontal(cameraPositions[index].position[0]);
                         setVertical(cameraPositions[index].position[1]);
                         setZoom(cameraPositions[index].position[2]);
+                        setCameraTitle(cameraPositions[index].title);
                         setReset((prev) => prev + 0.1);
                       }}
-                      className={classes.cameraButton}
+                      className={`${classes.cameraSideButton} ${
+                        index === cameraIndex &&
+                        classes.cameraSideButtonSelected
+                      }`}
                     >
-                      Camera {index + 1}
+                      {index + 1}
                     </button>
                   ))}
               </div>

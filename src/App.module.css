@@ -322,3 +322,20 @@
   background-color: #222;
   color: #999;
 }
+
+.cameraButtonContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 8px;
+}
+
+.cameraSideButton {
+  width: 40px;
+  height: 30px;
+  cursor: pointer;
+}
+
+.cameraSideButtonSelected {
+  background-color: red;
+}

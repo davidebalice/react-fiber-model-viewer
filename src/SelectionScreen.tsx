@@ -141,7 +141,7 @@ const SelectionScreen: React.FC<SelectionScreenProps> = ({ setPage }) => {
         <Card
           position={[2.5, 0, 0]}
           onClick={() => setPage("Car")}
-          textureUrl="./public/assets/card1.jpg"
+          textureUrl="./public/assets/card3.jpg"
           text="Car"
         />
       </Canvas>

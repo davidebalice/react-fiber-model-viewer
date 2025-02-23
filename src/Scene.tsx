@@ -24,10 +24,8 @@ interface SceneProps {
 
 const CameraController: React.FC<{
   targetPosition: [number, number, number];
-  lookAtPosition: [number, number, number];
   rotation: [number, number, number];
-  activeLookat: boolean;
-}> = ({ targetPosition, lookAtPosition, rotation, activeLookat }) => {
+}> = ({ targetPosition, rotation }) => {
   const { camera } = useThree();
   useFrame(() => {
     camera.position.lerp(
@@ -68,9 +66,7 @@ export default function Scene({
 
         <CameraController
           targetPosition={cameraPosition}
-          lookAtPosition={[-1, 0.8, -0.4]}
           rotation={initialRotation}
-          activeLookat={activeLookat}
         />
         {page === "Gundam" ? (
           <Gundam
