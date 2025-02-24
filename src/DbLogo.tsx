@@ -8,12 +8,13 @@ export default function DbLogo() {
     <>
       <primitive
         object={dblogo.scene}
-        position-x={2}
-        position-y={-0.55}
+        position-x={0.1}
+        position-y={3.76}
+        position-z={-2.4}
         rotation-x={1.55}
         rotation-y={0}
-        rotation-z={0.5}
-        scale={[25, 25, 25]}
+        rotation-z={1.4}
+        scale={[20, 20, 20]}
         CastShadow
         ReceiceShadow
       />

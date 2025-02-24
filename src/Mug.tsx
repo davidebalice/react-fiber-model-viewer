@@ -8,10 +8,11 @@ export default function Mug() {
     <>
       <primitive
         object={mug.scene}
-        position-x={-2.2}
-        position-y={-0.49}
+        position-x={0.3}
+        position-y={0.92}
+        position-z={-0.30}
         rotation-y={-2}
-        scale={[0.15, 0.15, 0.15]}
+        scale={[0.04, 0.04, 0.04]}
         castShadow
         receiveShadow
       >

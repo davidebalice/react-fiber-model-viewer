@@ -6,12 +6,12 @@ export default function Glass() {
         <meshPhysicalMaterial
           color="skyblue"
           transparent
-          opacity={0.6}
+          opacity={0.5}
           roughness={0.1}
           metalness={0.1}
-          transmission={0.5}
-          thickness={0.5}
-          ior={1.5}
+          transmission={0.3}
+          thickness={0.3}
+          ior={1}
         />
       </mesh>
     );
@@ -24,12 +24,12 @@ export default function Glass() {
         <meshPhysicalMaterial
           color="skyblue"
           transparent
-          opacity={0.6}
+          opacity={0.5}
           roughness={0.1}
           metalness={0.1}
-          transmission={0.5}
-          thickness={0.5}
-          ior={1.5}
+          transmission={0.3}
+          thickness={0.3}
+          ior={1}
         />
       </mesh>
     );
@@ -42,12 +42,12 @@ export default function Glass() {
         <meshPhysicalMaterial
           color="skyblue"
           transparent
-          opacity={0.6}
+          opacity={0.5}
           roughness={0.1}
           metalness={0.1}
-          transmission={0.5}
-          thickness={0.5}
-          ior={1.5}
+          transmission={0.3}
+          thickness={0.3}
+          ior={1}
         />
       </mesh>
     );
@@ -60,12 +60,12 @@ export default function Glass() {
         <meshPhysicalMaterial
           color="skyblue"
           transparent
-          opacity={0.6}
+          opacity={0.5}
           roughness={0.1}
           metalness={0.1}
-          transmission={0.5}
-          thickness={0.5}
-          ior={1.5}
+          transmission={0.3}
+          thickness={0.3}
+          ior={1}
         />
       </mesh>
     );
@@ -78,12 +78,12 @@ export default function Glass() {
         <meshPhysicalMaterial
           color="skyblue"
           transparent
-          opacity={0.6}
+          opacity={0.5}
           roughness={0.1}
           metalness={0.1}
-          transmission={0.5}
-          thickness={0.5}
-          ior={1.5}
+          transmission={0.3}
+          thickness={0.3}
+          ior={1}
         />
       </mesh>
     );
@@ -96,12 +96,12 @@ export default function Glass() {
         <meshPhysicalMaterial
           color="skyblue"
           transparent
-          opacity={0.6}
+          opacity={0.5}
           roughness={0.1}
           metalness={0.1}
-          transmission={0.5}
-          thickness={0.5}
-          ior={1.5}
+          transmission={0.3}
+          thickness={0.3}
+          ior={1}
         />
       </mesh>
     );
@@ -114,12 +114,12 @@ export default function Glass() {
         <meshPhysicalMaterial
           color="skyblue"
           transparent
-          opacity={0.6}
+          opacity={0.5}
           roughness={0.1}
           metalness={0.1}
-          transmission={0.5}
-          thickness={0.5}
-          ior={1.5}
+          transmission={0.3}
+          thickness={0.3}
+          ior={1}
         />
       </mesh>
     );
@@ -131,12 +131,12 @@ export default function Glass() {
         <meshPhysicalMaterial
           color="skyblue"
           transparent
-          opacity={0.6}
+          opacity={0.5}
           roughness={0.1}
           metalness={0.1}
-          transmission={0.5}
-          thickness={0.5}
-          ior={1.5}
+          transmission={0.3}
+          thickness={0.3}
+          ior={1}
         />
       </mesh>
     );

@@ -334,8 +334,9 @@
   width: 40px;
   height: 30px;
   cursor: pointer;
+  border-radius: 6px;
 }
 
 .cameraSideButtonSelected {
-  background-color: red;
+  background-color: #999;
 }
