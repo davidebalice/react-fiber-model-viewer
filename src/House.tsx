@@ -2,7 +2,7 @@ import { Environment, Sky, useGLTF, useProgress } from "@react-three/drei";
 import { useEffect } from "react";
 import Glass from "./Glass";
 import Mug from "./Mug";
-import Dblogo from "./Dblogo";
+import Dblogo from "./DbLogo";
 import "./style.css";
 
 interface HouseProps {

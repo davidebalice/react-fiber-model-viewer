@@ -353,6 +353,9 @@ function App() {
                     </button>
                   ))}
               </div>
+              {/*
+              
+          
               <div className={classes.buttonTitle}>Rotation</div>
               <div className={classes.positionButtonContainer}>
                 <div
@@ -388,6 +391,7 @@ function App() {
               <br />
               rotation: {initialRotation[0]} {initialRotation[1]}
               <br />
+                  */}
             </div>
           )}
 
