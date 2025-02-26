@@ -32,8 +32,7 @@ export default function Car({
 
       <Environment preset="warehouse" />
 
-
-    <ambientLight intensity={3}/>
+      <ambientLight intensity={3} />
 
       <primitive
         object={car.scene}

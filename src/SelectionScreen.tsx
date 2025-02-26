@@ -8,6 +8,7 @@ import "./style.css";
 
 interface SelectionScreenProps {
   setPage: React.Dispatch<React.SetStateAction<string>>;
+  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 function Background() {
@@ -84,10 +85,10 @@ function Card({
   );
 }
 
-const SelectionScreen: React.FC<SelectionScreenProps> = ({ setPage }) => {
+const SelectionScreen: React.FC<SelectionScreenProps> = ({ setPage, setShowModal }) => {
   return (
     <>
-      <Header setPage={setPage} />
+      <Header setPage={setPage} setShowModal={setShowModal} />
       <Canvas camera={{ position: [3, 2, 8], fov: 50 }} shadows>
         <Background />
         <OrbitControls />

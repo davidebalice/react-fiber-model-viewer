@@ -18,11 +18,13 @@ import {
   cameraPositionsHouse,
 } from "./cameraPosition";
 import Header from "./Header";
+import Modal from "./Modal";
 import Preloader from "./Preloader";
 import Scene from "./Scene";
 import SelectionScreen from "./SelectionScreen";
 
 function App() {
+  const [showModal, setShowModal] = useState(false);
   const [reset, setReset] = useState(1);
   const [zoom, setZoom] = useState(6);
   const [horizontal, setHorizontal] = useState(0);
@@ -70,6 +72,7 @@ function App() {
     setReset((prev) => prev + 0.1);
   };
 
+  /*
   const rotateLeft = () => {
     setInitialRotation(([x, y, z]) => [x, y - 0.01, z]);
   };
@@ -85,6 +88,7 @@ function App() {
   const rotateDown = () => {
     setInitialRotation(([x, y, z]) => [x + 0.01, y, z]);
   };
+  */
 
   useEffect(() => setLoading(true), []);
 
@@ -130,8 +134,7 @@ function App() {
       ArrowRight: () => void;
       w: () => void;
       s: () => void;
-      q: () => void;
-      e: () => void;
+  
     }
 
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -142,8 +145,7 @@ function App() {
         ArrowRight: right,
         w: () => {},
         s: () => {},
-        q: rotateLeft,
-        e: rotateRight,
+   
       };
 
       const handler = handlers[event.key as keyof KeyboardEventHandlers];
@@ -175,13 +177,15 @@ function App() {
 
   return (
     <>
-      {page === "selectionScreen" && <SelectionScreen setPage={setPage} />}
+      {showModal  && <Modal setShowModal={setShowModal} />}
+      
+      {page === "selectionScreen" && <SelectionScreen setPage={setPage} setShowModal={setShowModal}/>}
 
       {page !== "selectionScreen" && (
         <>
           {loading && <Preloader />}
 
-          <Header setPage={setPage} />
+          <Header setPage={setPage} setShowModal={setShowModal} />
 
           <div className={classes.cameraFixed}>
             {cameraPositions && (

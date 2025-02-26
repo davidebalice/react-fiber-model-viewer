@@ -2,9 +2,10 @@ import classes from "./App.module.css";
 import "./style.css";
 interface HeaderProps {
   setPage: React.Dispatch<React.SetStateAction<string>>;
+  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Header: React.FC<HeaderProps> = ({ setPage }) => {
+const Header: React.FC<HeaderProps> = ({ setPage, setShowModal }) => {
   return (
     <>
       <div className={classes.header}>
@@ -31,13 +32,24 @@ const Header: React.FC<HeaderProps> = ({ setPage }) => {
           </div>
         </div>
 
-        <a href="fdsfsd">
-          <img
-            src="./public/assets/model/textures/github.png"
-            className={classes.github}
-            alt="logo github"
-          />
-        </a>
+        <div>
+            <img
+              src="./public/assets/model/textures/info.png"
+              className={classes.github}
+              alt="info"
+              onClick={()=>setShowModal(true)}
+            />
+          <a
+            href="https://github.com/davidebalice/react-fiber-model-viewer"
+            target="_blank"
+          >
+            <img
+              src="./public/assets/model/textures/github.png"
+              className={classes.github}
+              alt="logo github"
+            />
+          </a>
+        </div>
       </div>
     </>
   );
