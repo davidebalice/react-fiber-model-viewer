@@ -20,26 +20,6 @@ body,
   width: 120px;
 }
 
-.notebook iframe {
-  width: 1060px;
-  height: 700px;
-  border: none;
-  border-radius: 20px;
-}
-
-.monitor iframe {
-  width: 1980px;
-  height: 1070px;
-  border: none;
-}
-
-.monitor-old iframe {
-  width: 1030px;
-  height: 940px;
-  border: none;
-  filter: sepia(0.6) contrast(1.2) saturate(0.8);
-}
-
 .preloader {
   position: fixed;
   top: 0;

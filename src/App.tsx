@@ -1,7 +1,13 @@
-import { Canvas } from "@react-three/fiber";
-import { useEffect, useState } from "react";
+import { Canvas, useFrame } from "@react-three/fiber";
+import {
+  createXRStore,
+  useXRInputSourceState,
+  XR,
+  XROrigin,
+} from "@react-three/xr";
+import { useEffect, useRef, useState } from "react";
 import ReactDOM from "react-dom/client";
-import { BsCameraReelsFill } from "react-icons/bs";
+import { BsCameraReelsFill, BsHeadsetVr } from "react-icons/bs";
 import {
   FaCaretSquareDown,
   FaCaretSquareLeft,
@@ -11,6 +17,7 @@ import {
 import { FaSquareMinus, FaSquarePlus } from "react-icons/fa6";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { RiArrowLeftSLine, RiArrowRightSLine } from "react-icons/ri";
+import { Group } from "three";
 import classes from "./App.module.css";
 import {
   cameraPositionsCar,
@@ -22,6 +29,7 @@ import Modal from "./Modal";
 import Preloader from "./Preloader";
 import Scene from "./Scene";
 import SelectionScreen from "./SelectionScreen";
+const store = createXRStore();
 
 function App() {
   const [showModal, setShowModal] = useState(false);
@@ -90,7 +98,37 @@ function App() {
   };
   */
 
-  useEffect(() => setLoading(true), []);
+  function Locomotion() {
+    const leftController = useXRInputSourceState("controller", "left");
+    const rightController = useXRInputSourceState("controller", "right");
+    const ref = useRef<Group>(null);
+
+    useFrame((_, delta) => {
+      if (!ref.current) return;
+
+      // Movimento orizzontale con lo stick sinistro
+      if (leftController?.gamepad) {
+        const thumbstickLeft = leftController.gamepad["xr-standard-thumbstick"];
+        if (thumbstickLeft) {
+          ref.current.position.x += (thumbstickLeft.xAxis ?? 0) * delta;
+          ref.current.position.z += (thumbstickLeft.yAxis ?? 0) * delta;
+        }
+      }
+
+      // Movimento verticale (su/giù) con lo stick destro
+      if (rightController?.gamepad) {
+        const thumbstickRight =
+          rightController.gamepad["xr-standard-thumbstick"];
+        if (thumbstickRight) {
+          ref.current.position.y += (thumbstickRight.yAxis ?? 0) * delta;
+        }
+      }
+    });
+
+    return <XROrigin ref={ref} />;
+  }
+
+  useEffect(() => setLoading(true), [page]);
 
   useEffect(
     () => setCameraPosition(initialPosition),
@@ -134,7 +172,6 @@ function App() {
       ArrowRight: () => void;
       w: () => void;
       s: () => void;
-  
     }
 
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -145,7 +182,6 @@ function App() {
         ArrowRight: right,
         w: () => {},
         s: () => {},
-   
       };
 
       const handler = handlers[event.key as keyof KeyboardEventHandlers];
@@ -175,11 +211,50 @@ function App() {
     };
   }, []);
 
+  useEffect(() => {
+    // Funzione per rimuovere il pulsante WebXR dallo Shadow DOM
+    const removeXRButton = () => {
+      // Trova il div che contiene il ShadowRoot
+      const xrButtonContainer = document.querySelector(
+        "body > div:nth-child(4)"
+      ); // Usa il selettore appropriato per il tuo caso
+      if (xrButtonContainer && xrButtonContainer.shadowRoot) {
+        const shadowRoot = xrButtonContainer.shadowRoot;
+        const xrButton = shadowRoot.querySelector("button");
+        const xrButton2 = shadowRoot.querySelector("div");
+        if (xrButton) {
+          xrButton.remove();
+        }
+        if (xrButton2) {
+          xrButton2.remove();
+        }
+      }
+    };
+
+    // Usa MutationObserver per osservare le modifiche nel DOM
+    const observer = new MutationObserver(() => {
+      removeXRButton(); // Prova a rimuovere il pulsante ogni volta che cambia il DOM
+    });
+
+    // Osserva i cambiamenti nei child del body
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+    });
+
+    // Rimuovi il pulsante subito se è già presente
+    removeXRButton();
+
+    // Pulisci l'osservatore quando il componente viene smontato
+    return () => observer.disconnect();
+  }, []);
   return (
     <>
-      {showModal  && <Modal setShowModal={setShowModal} />}
-      
-      {page === "selectionScreen" && <SelectionScreen setPage={setPage} setShowModal={setShowModal}/>}
+      {showModal && <Modal setShowModal={setShowModal} />}
+
+      {page === "selectionScreen" && (
+        <SelectionScreen setPage={setPage} setShowModal={setShowModal} />
+      )}
 
       {page !== "selectionScreen" && (
         <>
@@ -399,26 +474,41 @@ function App() {
             </div>
           )}
 
+          <div className={classes.buttonVrWrapper}>
+            <button
+              onClick={() => store.enterVR()}
+              className={classes.buttonVr}
+            >
+              <BsHeadsetVr style={{ fontSize: "20px", marginTop: "4px" }} />
+              <span>Enter VR</span>
+            </button>
+          </div>
+
           <Canvas
             shadows
             dpr={[1, 2]}
             style={{ position: "absolute", top: 0, left: 0, zIndex: 0 }}
             camera={{ fov: 45, near: 0.1, far: 100, position: [-3, 1.8, 4] }}
           >
-            <Scene
-              page={page}
-              reset={reset}
-              initialPosition={initialPosition}
-              initialRotation={initialRotation}
-              setInitialRotation={setInitialRotation}
-              cameraPosition={cameraPosition}
-              cameraPositionIndex={cameraIndex}
-              setCameraPositionIndex={setCameraIndex}
-              activeLookat={activeLookat}
-              setCameraPosition={setCameraPosition}
-              loading={loading}
-              setLoading={setLoading}
-            />
+            <XR store={store}>
+              <Locomotion />
+              <Scene
+                page={page}
+                reset={reset}
+                initialPosition={initialPosition}
+                initialRotation={initialRotation}
+                setInitialRotation={setInitialRotation}
+                cameraPosition={cameraPosition}
+                cameraPositionIndex={cameraIndex}
+                setCameraPositionIndex={setCameraIndex}
+                activeLookat={activeLookat}
+                setHorizontal={setHorizontal}
+                setVertical={setVertical}
+                setCameraPosition={setCameraPosition}
+                loading={loading}
+                setLoading={setLoading}
+              />
+            </XR>
           </Canvas>
         </>
       )}

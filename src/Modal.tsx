@@ -21,6 +21,9 @@ const Modal: React.FC<HeaderProps> = ({ setShowModal }) => {
           Models not included in the repository
           <br />
           <br />
+          <b>Vr support</b> - tested on Meta Quest 2
+          <br />
+          <br />
           Used models:
           <br />
           <br />
